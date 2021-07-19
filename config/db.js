@@ -4,7 +4,9 @@ const db = 'mongodb+srv://pekipeki4:Lazarovski123@devworld.xjxag.mongodb.net/myF
 const connectDB = async () => {
     try {
         await mongoose.connect(db, {
-            useNewUrlParser: true
+            useNewUrlParser: true,
+            useCreateIndex: true,
+            useFindAndModify: false
         })
         console.log('MongoDB connected.')
     } catch (e) {

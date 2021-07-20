@@ -12,7 +12,7 @@ const User = require('../../models/User')
 router.get('/', auth, async (req, res) => {
     try {
         let user = await User.findById(req.user.id).select('-password')
-        res.send(user)
+        res.json(user)
     } catch (e) {
         console.log(e)
         res.status(500).send('SERVER ERROR')
@@ -58,7 +58,9 @@ router.post('/login', [
             expiresIn: 360000
         }, (err, token) => {
             if (err) throw err
-            res.send(token)
+            res.json({
+                token
+            })
         })
 
     } catch (e) {

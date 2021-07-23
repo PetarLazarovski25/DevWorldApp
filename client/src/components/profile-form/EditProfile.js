@@ -24,7 +24,7 @@ const EditProfile = ({ profile: { profile, loading }, createProfile, history, ge
             linkedin: loading || !profile.social ? '' : profile.social.linkedin,
             youtube: loading || !profile.social ? '' : profile.social.youtube,
         })
-    }, [loading])
+    }, [loading, getCurrentProfile])
 
     const [formData, setFormData] = useState({
         company: '',

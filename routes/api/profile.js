@@ -7,6 +7,7 @@ const config = require('config')
 
 const Profile = require('../../models/Profile')
 const User = require('../../models/User')
+const Model = require('../../models/Post')
 
 // @route  GET api/profile/me
 // @desc   Get My Profile   
@@ -103,7 +104,7 @@ router.post('/', [auth, [
 // @access Public
 router.get('/', async (req, res) => {
     try {
-        const profiles = await Profile.find().populate('User', ['name', 'avatar'])
+        const profiles = await Profile.find().populate('user', ['name', 'avatar'])
         res.json(profiles)
     } catch (error) {
         console.log(error)
@@ -137,7 +138,11 @@ router.get('/user/:user_id', async (req, res) => {
 // @access Private
 router.delete('/', auth, async (req, res) => {
     try {
+
+        await Post.deleteMany({ user: req.user.id })
+
         await Profile.findOneAndRemove({ user: req.user.id })
+
         await User.findOneAndRemove({ _id: req.user.id })
 
         res.send('User Removed.')
